@@ -13,6 +13,7 @@ import com.web.spring.vo.Users;
 
 @SpringBootTest
 public class UserServiceTests {
+
     @Autowired
     private MainService userService;
 
@@ -34,11 +35,13 @@ public class UserServiceTests {
         user.setRating("일반회원");
         user.setPoint(0);
 
+        // Register the user
         userService.registerUser(user);
 
-        // Optional: Verify the user was added by querying the database
-        Users fetchedUser = userDAO.findById("testuser"); // Example method, you need to implement this
-        assertNotNull(fetchedUser);
-        assertEquals("Test User", fetchedUser.getName());
+        // Fetch the user from the database
+        Users fetchedUser = userDAO.findByEmail("testuser@example.com"); // Make sure this method is defined in your DAO
+        assertNotNull(fetchedUser, "User should not be null");
+        assertEquals("Test User", fetchedUser.getName(), "User name should match");
+        assertEquals("testuser@example.com", fetchedUser.getEmail(), "User email should match");
     }
 }

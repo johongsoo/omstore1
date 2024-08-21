@@ -31,6 +31,8 @@ public interface MainDao {
             "VALUES (#{userid}, #{name}, #{pwd}, #{email}, #{birthdate}, #{address}, #{address1}, #{address2}, #{phone}, #{rating}, #{point})")
     int registerUser(Users user);
 
+	Users findByEmail(String string);
+
 
 
 
