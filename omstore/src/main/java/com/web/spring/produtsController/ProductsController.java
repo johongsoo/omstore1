@@ -21,6 +21,7 @@ import com.web.spring.productsService.ProductsService;
 import com.web.spring.vo.Cart;
 import com.web.spring.vo.MangbungStore;
 import com.web.spring.vo.OdungStore;
+import com.web.spring.vo.Users;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -37,7 +38,7 @@ public class ProductsController {
 		return "WEB-INF\\products\\odungstore.jsp";
 	}
 	
-	//http://localhost:8080/cart
+	//http://192.168.0.11:8080/cart
 	@RequestMapping("cart")
 	public String productcart() {
 		return "WEB-INF\\products\\product-cart.jsp";
@@ -128,20 +129,21 @@ public class ProductsController {
 	    }
 	
 	
-    @GetMapping("/cart")
-    public String productCart(HttpSession session, Model model) {
-        // 세션에서 사용자 ID 가져오기
-        String userId = (String) session.getAttribute("userId");
-        
-        if (userId != null) {
-            // 사용자 ID에 따라 장바구니 항목 조회
-            List<Cart> cartItems = service.getCartByUserId(userId);
-            model.addAttribute("cartItems", cartItems);
-        } else {
-            // 사용자 ID가 없는 경우
-            model.addAttribute("errorMessage", "User not logged in.");
-        }
-        
-        return "WEB-INF/products/product-cart.jsp";
-    }
+	   @GetMapping("/cart")
+	   public String productCart(HttpSession session, Model model) {
+	       Users user = (Users) session.getAttribute("users");
+	       String userId = (user != null) ? user.getUserid() : null; // 사용자 ID를 추출합니다.
+
+	       System.out.println("User ID from Session: " + userId); // 디버깅용 로그
+
+	       if (userId != null) {
+	           List<Cart> cartItems = service.getCartByUserId(userId); // 사용자 ID를 이용해 장바구니 항목을 가져옵니다.
+	           System.out.println("Cart Items: " + cartItems); // 디버깅용 로그
+	           model.addAttribute("cartItems", cartItems);
+	       } else {
+	           model.addAttribute("errorMessage", "User not logged in.");
+	       }
+
+	       return "WEB-INF/products/product-cart.jsp"; // 경로 확인
+	   }
 }

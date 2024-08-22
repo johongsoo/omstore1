@@ -33,7 +33,6 @@
 <link rel="stylesheet" href="${path}/vendor/perfect-scrollbar/perfect-scrollbar.css">
 <link rel="stylesheet" href="${path}/css/util.css">
 <link rel="stylesheet" href="${path}/css/main.css">
-<link rel="stylesheet" href="${path}/css/login.css">
     <link rel="icon" href="${path}/assets/images/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="${path}/assets/css/bootstrap/css/bootstrap.min.css">
@@ -45,6 +44,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 <link rel="stylesheet" href="${path}/a00_com/bootstrap.min.css" >
 <link rel="stylesheet" href="${path}/a00_com/jquery-ui.css" >
+<link rel="stylesheet" href="${path}/css/login.css">
 <style>
 
 </style>
@@ -52,7 +52,6 @@
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/bootstrap.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -95,8 +94,8 @@ $(document).ready(function(){
                 <div class="col-sm-12">
                     <!-- Authentication card start -->
                     <div class="login-card card-block auth-body mr-auto ml-auto">
-                            <div class="text-center">
-                                <img src="" alt="logo.png">
+                            <div class="text-center" >
+                                <img src="${path }/image/logoimg.png" alt="logo.png">
                             </div>
                             <div class="auth-box">
 								    <div class="row m-b-20">
@@ -137,12 +136,12 @@ $(document).ready(function(){
 								</form>
                                 <hr/>
                                 <div class="row">
-                                    <div class="col-md-10">
+                                    <div id="rowtext">
                                         <p class="text-inverse text-left m-b-0"><a href="register" style="text-decoration:none; color:black;">회원가입</a></p>
                                         <p class="text-inverse text-left"><b>저희 사이트를 찾아주셔서 감사합니다</b></p>
                                     </div>
-                                    <div class="col-md-2">
-                                        <img src=""  alt="small-logo.png">
+                                    <div class="">
+                                        <img src="${path}/image/logoimg.png" id="logo"  alt="small-logo.png">
                                     </div>
                       			 </div>
                            </div>

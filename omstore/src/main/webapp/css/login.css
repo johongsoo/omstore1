@@ -146,3 +146,18 @@ label {
 #address{
 	margin-bottom:14px;
 }
+
+img{
+	width:130px;
+	height:70px;
+}
+
+.row{
+	display: flex;
+}
+
+#rowtext{
+	margin-top:15px;
+	margin-left:18px;
+	margin-right:35px;
+}

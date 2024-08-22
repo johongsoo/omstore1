@@ -57,26 +57,34 @@ public class MainController {
 	    return "WEB-INF\\mainpage\\login.jsp";
 	}
 
-	@PostMapping("loginPage")
+	@PostMapping("/loginPage")
 	public String login(Users users, Model model, HttpSession session, 
-			RedirectAttributes redirectAttributes) {
+	        RedirectAttributes redirectAttributes) {
 	    Users loguser = service.login(users);
 	    if (loguser != null) {
-	    	redirectAttributes.addFlashAttribute("msg", "로그인 성공");
-	        session.setAttribute("users", loguser); 
+	        session.setAttribute("users", loguser); // 사용자 정보를 세션에 저장
+	        System.out.println("User added to session: " + loguser); // 디버깅용 로그
+	        redirectAttributes.addFlashAttribute("msg", "로그인 성공");
 	        return "redirect:/MainPage";
 	    } else {
 	        model.addAttribute("msg", "로그인 실패");
-	        return "WEB-INF\\mainpage\\login.jsp";
+	        return "WEB-INF/mainpage/login.jsp";
 	    }
 	}
 	
-    @RequestMapping("logout")
-    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
-        session.removeAttribute("users"); 
-        redirectAttributes.addFlashAttribute("msg", "로그아웃 성공"); 
-        return "redirect:/MainPage";
-    }
+	@GetMapping("/checkSession")
+	public String checkSession(HttpSession session) {
+	    String userId = (String) session.getAttribute("userId");
+	    System.out.println("Session userId: " + userId);
+	    return "redirect:/MainPage";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+	    session.invalidate(); // 세션을 무효화하여 모든 세션 데이터 삭제
+	    redirectAttributes.addFlashAttribute("msg", "로그아웃 성공"); 
+	    return "redirect:/MainPage"; // 로그아웃 후 리다이렉트
+	}
 	
 	
 	//http://localhost:8080/MainPage

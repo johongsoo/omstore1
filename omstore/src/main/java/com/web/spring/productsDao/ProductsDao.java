@@ -52,9 +52,7 @@ public interface ProductsDao {
 	    @Param("quantity") int quantity
 	);
 	
-    @Select("SELECT cartid, userid, product_name, product_price, quantity " +
-            "FROM cart " +
-            "WHERE userid = #{userid}")
+    @Select("SELECT * FROM cart WHERE userid = #{userid}")
     List<Cart> getCartByUserId(String userid);
 
 }

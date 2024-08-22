@@ -62,24 +62,24 @@
                     </div>
 
                     <div class="right-top-bar flex-w h-full">
-                        <c:choose>
-						    <c:when test="${not empty sessionScope.users}">
-						        <a class="flex-c-m trans-04 p-lr-25" style="color:#ABABAB">
-						        어서오세요, ${sessionScope.users.name} 님!</a>
-						         <a href="${path}/logout" class="flex-c-m trans-04 p-lr-25">로그아웃</a>
-						        <c:if test="${sessionScope.users.rating == '관리자'}">
-						            <a href="${path}/adminDashboard" class="flex-c-m trans-04 p-lr-25">관리자 대시보드</a>
-						        </c:if>
-						        <c:if test="${sessionScope.users.rating == '일반회원'}">
-						            <a href="${path}/mypage" class="flex-c-m trans-04 p-lr-25">마이 페이지</a>
-						        </c:if>
-						    </c:when>
-						    <c:otherwise>
-						        <a href="${path}/loginPage" class="flex-c-m trans-04 p-lr-25">로그인</a>
-						        <a href="${path}/register" class="flex-c-m trans-04 p-lr-25">회원가입</a>
-						    </c:otherwise>
+						<c:choose>
+						  <c:when test="${not empty sessionScope.users}">
+						      <a class="flex-c-m trans-04 p-lr-25" style="color:#ABABAB">
+						      어서오세요, ${sessionScope.users.userid} 님!</a>
+						      <a href="${path}/logout" class="flex-c-m trans-04 p-lr-25">로그아웃</a>
+						      <c:if test="${sessionScope.users.rating == '관리자'}">
+						          <a href="${path}/adminDashboard" class="flex-c-m trans-04 p-lr-25">관리자 대시보드</a>
+						      </c:if>
+						      <c:if test="${sessionScope.users.rating == '일반회원'}">
+						          <a href="${path}/mypage" class="flex-c-m trans-04 p-lr-25">마이 페이지</a>
+						      </c:if>
+						  </c:when>
+						  <c:otherwise>
+						      <a href="${path}/loginPage" class="flex-c-m trans-04 p-lr-25">로그인</a>
+						      <a href="${path}/register" class="flex-c-m trans-04 p-lr-25">회원가입</a>
+						  </c:otherwise>
 						</c:choose>
-                        <a href="#" class="flex-c-m trans-04 p-lr-25">장바구니</a>
+                        <a href="cart" class="flex-c-m trans-04 p-lr-25">장바구니</a>
                         <a href="#" class="flex-c-m trans-04 p-lr-25">고객센터</a>
                     </div>
                 </div>
@@ -87,8 +87,8 @@
 
             <div class="wrap-menu-desktop how-shadow1">
                 <nav class="limiter-menu-desktop container">
-                    <a href="${path}/" class="logo">
-                        <img src="${path}/images/icons/logo-01.png" alt="IMG-LOGO">
+                    <a href="MainPage" class="logo">
+                        <img src="${path}/image/logoimg.jpg" class="logoimg" alt="IMG-LOGO">
                     </a>
                     <div class="menu-desktop">
                         <ul class="main-menu">
@@ -118,7 +118,7 @@
         <!-- Mobile Header -->
         <div class="wrap-header-mobile">
             <div class="logo-mobile">
-                <a href="${path}/"><img src="${path}/images/icons/logo-01.png" alt="IMG-LOGO"></a>
+                <a href="${path}/"><img src="${path}/image/logoimg.jpg" alt="IMG-LOGO"></a>
             </div>
             <div class="wrap-icon-header flex-w flex-r-m m-r-15">
                 <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">

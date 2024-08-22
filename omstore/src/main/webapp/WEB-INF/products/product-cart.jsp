@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
 <%--
@@ -18,6 +19,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <!-- ========================================================================================= -->
 
 <link rel="stylesheet" href="${path}/vendor/bootstrap/css/bootstrap.min.css">
@@ -44,8 +46,8 @@
 <script src="${path}/a00_com/popper.min.js"></script>
 <script src="${path}/a00_com/bootstrap.min.js"></script>
 <script src="${path}/a00_com/jquery-ui.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 	
@@ -59,89 +61,65 @@
 	<%@ include file="../mainpage/header.jsp" %>
 
 	<!-- Cart -->
-	<div class="wrap-header-cart js-panel-cart">
-		<div class="s-full js-hide-cart"></div>
+<div class="wrap-header-cart js-panel-cart">
+    <div class="s-full js-hide-cart"></div>
 
-		<div class="header-cart flex-col-l p-l-65 p-r-25">
-			<div class="header-cart-title flex-w flex-sb-m p-b-8">
-				<span class="mtext-103 cl2">
-					장바구니
-				</span>
+    <div class="header-cart flex-col-l p-l-65 p-r-25">
+        <div class="header-cart-title flex-w flex-sb-m p-b-8">
+            <span class="mtext-103 cl2">
+                장바구니
+            </span>
 
-				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-					<i class="zmdi zmdi-close"></i>
-				</div>
-			</div>
-			
-			<div class="header-cart-content flex-w js-pscroll">
-				<ul class="header-cart-wrapitem w-full">
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="${path}/image/mangbungcard.jpg" alt="IMG">
-						</div>
+            <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+                <i class="zmdi zmdi-close"></i>
+            </div>
+        </div>
+        
+        <div class="header-cart-content flex-w js-pscroll">
+            <c:forEach var="cart" items="${cartItems}">
+                <ul class="header-cart-wrapitem w-full">
+                    <li class="header-cart-item flex-w flex-t m-b-12">
+                        <div class="header-cart-item-img">
+                            <img src="${cart.product_img}" alt="IMG">
+                        </div>
 
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								망붕이 카드 스티커
-							</a>
+                        <div class="header-cart-item-txt p-t-8">
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                ${cart.product_name}
+                            </a>
 
-							<span class="header-cart-item-info">
-								1 x 3,000원
-							</span>
-						</div>
-					</li>
+                            <span class="header-cart-item-info">
+                                ${cart.quantity} X ${cart.product_price} 원
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </c:forEach>
+            <!-- 총 금액 계산 -->
+            <c:set var="totalAmount" value="0" scope="page"/>
+            <c:forEach var="cart" items="${cartItems}">
+                <c:set var="totalAmount" value="${totalAmount + (cart.product_price * cart.quantity)}" scope="page"/>
+            </c:forEach>
 
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="${path}/image/mangbunggoods.jpg" alt="IMG">
-						</div>
+            <div class="w-full">
+                <div class="header-cart-total w-full p-tb-40">
+                    총 금액: ${totalAmount} 원
+                </div>
 
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								망붕이 인형
-							</a>
+                <div class="header-cart-buttons flex-w w-full">
+                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        구 매
+                    </a>
 
-							<span class="header-cart-item-info">
-								1 x 39,000원
-							</span>
-						</div>
-					</li>
+                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        장바구니 이동
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="${path}/image/odunggoods.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								오둥이 인형
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x 20,000원
-							</span>
-						</div>
-					</li>
-				</ul>
-				
-				<div class="w-full">
-					<div class="header-cart-total w-full p-tb-40">
-						총 금액: 62,000원
-					</div>
-
-					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							구 매
-						</a>
-
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							장바구니 이동
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 
 	<!-- breadcrumb -->
@@ -166,55 +144,59 @@
 				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 					<div class="m-l-25 m-r--38 m-lr-0-xl">
 						<div class="wrap-table-shopping-cart">
-							<table class="table-shopping-cart">
-								<tr class="table_head">
-									<th class="column-1">Product</th>
-									<th class="column-2">name</th>
-									<th class="column-3">Price</th>
-									<th class="column-4">Quantity</th>
-									<th class="column-5">Total</th>
-								</tr>
+<table class="table-shopping-cart">
+                    
+                    <tr class="table_head">
+                        <th class="column-1">Product</th>
+                        <th class="column-2">Name</th>
+                        <th class="column-3">Price</th>
+                        <th class="column-4">Quantity</th>
+                        <th class="column-5">Total</th>
+                    </tr>
+					
+<c:forEach var="cart" items="${cartItems}">
+    <tr class="table_row">
+    	<td>
+    	   <input type="checkbox" class="cart-checkbox"/>
+    	</td>
+        <td class="column-1">
+            <div class="how-itemcart1">
+                <img src="${cart.product_img}" alt="IMG">
+            </div>
+        </td>
+        <td class="column-2">${cart.product_name}</td>
+        <td class="column-3">${cart.product_price}원</td>
+        <td class="column-4">
+            <div class="wrap-num-product flex-w m-l-auto m-r-0">
+                <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                    <i class="fs-16 zmdi zmdi-minus"></i>
+                </div>
+                <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="${cart.quantity}" data-price="${cart.product_price}">
+                <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                    <i class="fs-16 zmdi zmdi-plus"></i>
+                </div>
+            </div>
+        </td>
+        <td class="column-5">
+            <span class="total-price">${cart.product_price * cart.quantity}원</span>
+        </td>
+    </tr>
+</c:forEach>
+                        </table>
+                    </div>
 
-	
-
-								<tr class="table_row">
-									<td class="column-1">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-05.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2">Lightweight Jacket</td>
-									<td class="column-3">$ 16.00</td>
-									<td class="column-4">
-										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
-
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="1">
-
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
-										</div>
-									</td>
-									<td class="column-5">$ 16.00</td>
-								</tr>
-							</table>
-						</div>
-
-						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
-									
-								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									마일리지 적용
+                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                        <div class="flex-w flex-m m-r-20 m-tb-5">
+                        	<h6>현재 마일리지 : ${users.point}</h6><br>
+                            <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" value="0">
+                            <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                                마일리지 적용
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
+				
 				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
 					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
 						<h4 class="mtext-109 cl2 p-b-30">
@@ -229,8 +211,8 @@
 							</div>
 
 							<div class="size-209">
-								<span class="mtext-110 cl2">
-									$79.65
+								<span class="mtext-110 cl2" id="totalAmount">
+									원
 								</span>
 							</div>
 						</div>
@@ -287,7 +269,7 @@
 							</div>
 
 							<div class="size-209 p-t-1">
-								<span class="mtext-110 cl2">
+								<span class="mtext-110 cl2" id="totalAmount2">
 									$79.65
 								</span>
 							</div>
@@ -496,6 +478,126 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 모든 수량 입력 요소와 버튼 요소를 선택합니다.
+    const quantityInputs = document.querySelectorAll('input.num-product');
+    const increaseButtons = document.querySelectorAll('.btn-num-product-up');
+    const decreaseButtons = document.querySelectorAll('.btn-num-product-down');
 
+    // 수량 변경 시 총 금액 업데이트
+    function updateTotalPrice(input) {
+        const price = parseFloat(input.dataset.price);
+        let quantity = parseInt(input.value, 10);
+
+        // 수량이 유효한지 확인하고 최소값 1로 설정
+        if (isNaN(quantity) || quantity < 1) {
+            quantity = 1;
+        }
+
+        // 총 금액 계산
+        const totalPriceElement = input.closest('tr').querySelector('.total-price');
+        const totalPrice = price * quantity;
+        totalPriceElement.textContent = totalPrice.toLocaleString() + '원';
+
+        // 입력 필드의 값을 업데이트
+        input.value = quantity;
+    }
+
+    // 페이지 로딩 시 초기 값으로 총 금액 업데이트
+    quantityInputs.forEach(input => {
+        updateTotalPrice(input);
+
+        // 입력 필드 값이 변경될 때
+        input.addEventListener('change', function() {
+            updateTotalPrice(this);
+        });
+    });
+
+    // 증가 버튼 클릭 시 수량 증가
+    increaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.closest('.wrap-num-product').querySelector('input.num-product');
+            let quantity = parseInt(input.value, 10);
+            if (!isNaN(quantity)) {
+                input.value = quantity; // 수량을 1 증가
+                updateTotalPrice(input); // 총 금액을 업데이트
+            }
+        });
+    });
+
+    // 감소 버튼 클릭 시 수량 감소
+    decreaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.closest('.wrap-num-product').querySelector('input.num-product');
+            let quantity = parseInt(input.value, 10);
+            if (!isNaN(quantity) && quantity > 1) {
+                input.value = quantity; // 수량을 1 감소
+                updateTotalPrice(input); // 총 금액을 업데이트
+            }
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 체크박스와 수량 입력 필드, 총계를 표시할 요소를 선택합니다.
+    const checkboxes = document.querySelectorAll('.cart-checkbox');
+    const quantityInputs = document.querySelectorAll('input.num-product');
+    const totalAmountElement = document.getElementById('totalAmount');
+    
+
+    // 총계를 업데이트하는 함수
+    function updateTotalAmount() {
+        let total = 0;
+
+        // 체크된 항목의 가격을 모두 더합니다.
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                const row = checkbox.closest('tr');
+                const totalPriceElement = row.querySelector('.total-price');
+                const totalPrice = parseFloat(totalPriceElement.textContent.replace('원', '').replace(/,/g, ''));
+                total += totalPrice;
+            }
+        });
+
+        // 총계를 표시합니다.
+        totalAmountElement.textContent = total.toLocaleString() + '원';
+    }
+
+    // 수량 입력 필드 변경 시 총계를 업데이트하는 함수
+    function updatePriceOnQuantityChange() {
+        quantityInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const price = parseFloat(this.dataset.price);
+                let quantity = parseInt(this.value, 10);
+
+                // 유효한 수량으로 총계를 업데이트합니다.
+                if (!isNaN(quantity) && quantity > 0) {
+                    const totalPriceElement = this.closest('tr').querySelector('.total-price');
+                    totalPriceElement.textContent = (price * quantity).toLocaleString() + '원';
+                    updateTotalAmount();  // 수량 변경 후 총계를 업데이트
+                }
+            });
+        });
+    }
+
+    // 체크박스 상태가 변경될 때 총계를 업데이트합니다.
+    function addCheckboxChangeListener() {
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateTotalAmount);
+        });
+    }
+
+    // 페이지 로딩 시 초기 총계를 업데이트합니다.
+    updateTotalAmount();
+
+    // 수량 입력 필드의 이벤트 리스너 설정
+    updatePriceOnQuantityChange();
+
+    // 체크박스 상태 변경 리스너 추가
+    addCheckboxChangeListener();
+});
+
+</script>
 </body>
 </html>
