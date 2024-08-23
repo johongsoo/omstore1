@@ -61,89 +61,6 @@
 	<%@ include file="../mainpage/header.jsp" %>
 
 	<!-- Cart -->
-	<div class="wrap-header-cart js-panel-cart">
-		<div class="s-full js-hide-cart"></div>
-
-		<div class="header-cart flex-col-l p-l-65 p-r-25">
-			<div class="header-cart-title flex-w flex-sb-m p-b-8">
-				<span class="mtext-103 cl2">
-					장바구니
-				</span>
-
-				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-					<i class="zmdi zmdi-close"></i>
-				</div>
-			</div>
-			
-			<div class="header-cart-content flex-w js-pscroll">
-				<ul class="header-cart-wrapitem w-full">
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="${path}/image/mangbungcard.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								망붕이 카드 스티커
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x 3,000원
-							</span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="${path}/image/mangbunggoods.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								망붕이 인형
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x 39,000원
-							</span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="${path}/image/odunggoods.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								오둥이 인형
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x 20,000원
-							</span>
-						</div>
-					</li>
-				</ul>
-				
-				<div class="w-full">
-					<div class="header-cart-total w-full p-tb-40">
-						총 금액: 62,000원
-					</div>
-
-					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							구 매
-						</a>
-
-						<a href="cartlist" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							장바구니 이동
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	
 	<!-- Product -->
 	<div class="bg0 m-t-23 p-b-140">
@@ -329,7 +246,7 @@
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
-							<img src="${odung.image}" alt="IMG-PRODUCT">
+							<img src="${odung.image}" alt="IMG-PRODUCT" onclick="detail(${odung.productsid})">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
 							data-name="${odung.name}" 
@@ -541,14 +458,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 <div class="col-md-6 col-lg-7 p-b-30">
                     <div class="p-l-25 p-r-30 p-lr-0-lg">
                         <div class="wrap-slick3 flex-sb flex-w">
-                            <div class="wrap-slick3-dots"></div>
+                            <div class="wrap-slick3-dots" ></div>
                             <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
                              
 
                             <div class="slick3 gallery-lb">
                                 <!-- 제품 이미지 표시 영역 -->
-                                <div class="item-slick3" data-thumb="${odung.image}">
-                                    <div class="wrap-pic-w pos-relative">
+                                <div class="item-slick3" data-thumb="">
+                                    <div class="wrap-pic-w pos-relative" >
                                         <img src="${odung.image}" alt="IMG-PRODUCT" id="modal-image">
                                         <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="${odung.image }" id="modal-image-link">
                                             <i class="fa fa-expand"></i>
@@ -576,43 +493,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
                         	<!--  -->
 							<div class="p-t-33">
-								<div class="flex-w flex-r-m p-b-10">
-									<div class="size-203 flex-c-m respon6">
-										Size
-									</div>
-
-									<div class="size-204 respon6-next">
-										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time">
-												<option>Choose an option</option>
-												<option>Size S</option>
-												<option>Size M</option>
-												<option>Size L</option>
-												<option>Size XL</option>
-											</select>
-											<div class="dropDownSelect2"></div>
-										</div>
-									</div>
-								</div>
-
-								<div class="flex-w flex-r-m p-b-10">
-									<div class="size-203 flex-c-m respon6">
-										Color
-									</div>
-
-									<div class="size-204 respon6-next">
-										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time">
-												<option>Choose an option</option>
-												<option>Red</option>
-												<option>Blue</option>
-												<option>White</option>
-												<option>Grey</option>
-											</select>
-											<div class="dropDownSelect2"></div>
-										</div>
-									</div>
-								</div>
+							
+						
 
 								<div class="flex-w flex-r-m p-b-10">
 									<div class="size-204 flex-w flex-m respon6-next">

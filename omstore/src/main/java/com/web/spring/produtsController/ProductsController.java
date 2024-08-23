@@ -146,4 +146,22 @@ public class ProductsController {
 
 	       return "WEB-INF/products/product-cart.jsp"; // 경로 확인
 	   }
+	   
+	   @GetMapping("/sidecart")
+	   public String sideCart(HttpSession session, Model model) {
+	       Users user = (Users) session.getAttribute("users");
+	       String userId = (user != null) ? user.getUserid() : null; // 사용자 ID를 추출합니다.
+
+	       System.out.println("User ID from Session: " + userId); // 디버깅용 로그
+
+	       if (userId != null) {
+	           List<Cart> cartItems = service.getCartByUserId(userId); // 사용자 ID를 이용해 장바구니 항목을 가져옵니다.
+	           System.out.println("Cart Items: " + cartItems); // 디버깅용 로그
+	           model.addAttribute("cartItems2", cartItems);
+	       } else {
+	           model.addAttribute("errorMessage", "User not logged in.");
+	       }
+
+	       return "WEB-INF/mainpage/header.jsp"; // 경로 확인
+	   }
 }

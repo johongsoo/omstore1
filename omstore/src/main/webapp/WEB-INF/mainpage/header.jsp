@@ -183,6 +183,66 @@
             </div>
         </div>
     </header>
+    
+    	<!-- Cart -->
+<div class="wrap-header-cart js-panel-cart">
+    <div class="s-full js-hide-cart"></div>
+
+    <div class="header-cart flex-col-l p-l-65 p-r-25">
+        <div class="header-cart-title flex-w flex-sb-m p-b-8">
+            <span class="mtext-103 cl2">
+                장바구니
+            </span>
+
+            <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+                <i class="zmdi zmdi-close"></i>
+            </div>
+        </div>
+        
+        <div class="header-cart-content flex-w js-pscroll">
+            <c:forEach var="cart" items="${cartItems2}">
+                <ul class="header-cart-wrapitem w-full">
+                    <li class="header-cart-item flex-w flex-t m-b-12">
+                        <div class="header-cart-item-img">
+                            <img src="${cart.product_img}" alt="IMG">
+                        </div>
+
+                        <div class="header-cart-item-txt p-t-8">
+                            <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                ${cart.product_name}
+                            </a>
+
+                            <span class="header-cart-item-info">
+                                ${cart.quantity} X ${cart.product_price} 원
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </c:forEach>
+            <!-- 총 금액 계산 -->
+            <c:set var="totalAmount" value="0" scope="page"/>
+            <c:forEach var="cart" items="${cartItems}">
+                <c:set var="totalAmount" value="${totalAmount + (cart.product_price * cart.quantity)}" scope="page"/>
+            </c:forEach>
+
+            <div class="w-full">
+                <div class="header-cart-total w-full p-tb-40">
+                    총 금액: ${totalAmount} 원
+                </div>
+
+                <div class="header-cart-buttons flex-w w-full">
+                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                        구 매
+                    </a>
+
+                    <a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                        장바구니 이동
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Main content can go here -->
 
@@ -237,6 +297,127 @@ document.querySelector('.js-addcart-detail').addEventListener('click', function(
         console.error('Error:', error);
     });
 });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 모든 수량 입력 요소와 버튼 요소를 선택합니다.
+    const quantityInputs = document.querySelectorAll('input.num-product');
+    const increaseButtons = document.querySelectorAll('.btn-num-product-up');
+    const decreaseButtons = document.querySelectorAll('.btn-num-product-down');
+
+    // 수량 변경 시 총 금액 업데이트
+    function updateTotalPrice(input) {
+        const price = parseFloat(input.dataset.price);
+        let quantity = parseInt(input.value, 10);
+
+        // 수량이 유효한지 확인하고 최소값 1로 설정
+        if (isNaN(quantity) || quantity < 1) {
+            quantity = 1;
+        }
+
+        // 총 금액 계산
+        const totalPriceElement = input.closest('tr').querySelector('.total-price');
+        const totalPrice = price * quantity;
+        totalPriceElement.textContent = totalPrice.toLocaleString() + '원';
+
+        // 입력 필드의 값을 업데이트
+        input.value = quantity;
+    }
+
+    // 페이지 로딩 시 초기 값으로 총 금액 업데이트
+    quantityInputs.forEach(input => {
+        updateTotalPrice(input);
+
+        // 입력 필드 값이 변경될 때
+        input.addEventListener('change', function() {
+            updateTotalPrice(this);
+        });
+    });
+
+    // 증가 버튼 클릭 시 수량 증가
+    increaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.closest('.wrap-num-product').querySelector('input.num-product');
+            let quantity = parseInt(input.value, 10);
+            if (!isNaN(quantity)) {
+                input.value = quantity; // 수량을 1 증가
+                updateTotalPrice(input); // 총 금액을 업데이트
+            }
+        });
+    });
+
+    // 감소 버튼 클릭 시 수량 감소
+    decreaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.closest('.wrap-num-product').querySelector('input.num-product');
+            let quantity = parseInt(input.value, 10);
+            if (!isNaN(quantity) && quantity > 1) {
+                input.value = quantity; // 수량을 1 감소
+                updateTotalPrice(input); // 총 금액을 업데이트
+            }
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 체크박스와 수량 입력 필드, 총계를 표시할 요소를 선택합니다.
+    const checkboxes = document.querySelectorAll('.cart-checkbox');
+    const quantityInputs = document.querySelectorAll('input.num-product');
+    const totalAmountElement = document.getElementById('totalAmount');
+    
+
+    // 총계를 업데이트하는 함수
+    function updateTotalAmount() {
+        let total = 0;
+
+        // 체크된 항목의 가격을 모두 더합니다.
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                const row = checkbox.closest('tr');
+                const totalPriceElement = row.querySelector('.total-price');
+                const totalPrice = parseFloat(totalPriceElement.textContent.replace('원', '').replace(/,/g, ''));
+                total += totalPrice;
+            }
+        });
+
+        // 총계를 표시합니다.
+        totalAmountElement.textContent = total.toLocaleString() + '원';
+    }
+
+    // 수량 입력 필드 변경 시 총계를 업데이트하는 함수
+    function updatePriceOnQuantityChange() {
+        quantityInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const price = parseFloat(this.dataset.price);
+                let quantity = parseInt(this.value, 10);
+
+                // 유효한 수량으로 총계를 업데이트합니다.
+                if (!isNaN(quantity) && quantity > 0) {
+                    const totalPriceElement = this.closest('tr').querySelector('.total-price');
+                    totalPriceElement.textContent = (price * quantity).toLocaleString() + '원';
+                    updateTotalAmount();  // 수량 변경 후 총계를 업데이트
+                }
+            });
+        });
+    }
+
+    // 체크박스 상태가 변경될 때 총계를 업데이트합니다.
+    function addCheckboxChangeListener() {
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateTotalAmount);
+        });
+    }
+
+    // 페이지 로딩 시 초기 총계를 업데이트합니다.
+    updateTotalAmount();
+
+    // 수량 입력 필드의 이벤트 리스너 설정
+    updatePriceOnQuantityChange();
+
+    // 체크박스 상태 변경 리스너 추가
+    addCheckboxChangeListener();
+});
+
 </script>
 </body>
 </html>
